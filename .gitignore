@@ -1,0 +1,42 @@
+# Temporary files
+*~
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+cls/
+build/
+/captures
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Android studio files
+.gradle
+.idea/
+**/*.iml
+
+# Eclipse stuff
+.metadata
+
+# Proguard
+dump.txt
+usage.txt
+seeds.txt
+
+# JNI
+obj/
+
+# IDE crash logs
+hs_err_pid*.log
+replay_pid*.log
