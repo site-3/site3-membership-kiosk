@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Site 3 Membership Kiosk</string>
+
+    <string name="hint_full_name">Full name</string>
+    <string name="hint_email">Email</string>
+    <string name="title_payment_information">Payment Information</string>
+    <string name="hint_payment_card_number">Card number</string>
+    <string name="hint_payment_expiry">MM / YY</string>
+    <string name="hint_payment_ccv">CCV</string>
+    <string name="button_finish_application">Submit</string>
 </resources>
