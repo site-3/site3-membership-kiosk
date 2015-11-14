@@ -8,4 +8,5 @@
     <string name="hint_payment_expiry">MM / YY</string>
     <string name="hint_payment_ccv">CCV</string>
     <string name="button_finish_application">Submit</string>
+    <string name="manually_add_rfid">Manually Enter RFID</string>
 </resources>
