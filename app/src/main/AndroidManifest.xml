@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <service
+            android:name=".api.service.ApiService"
+            android:label="API Service" >
+        </service>
+    </application>
 </manifest>

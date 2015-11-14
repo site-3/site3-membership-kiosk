@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stripe_token">pk_test_9roddYi1U4CrBxrQUIRmFCSl</string>
+    <string name="api_endpoint">https://www.site3.ca</string>
 </resources>

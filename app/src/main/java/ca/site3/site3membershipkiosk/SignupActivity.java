@@ -1,6 +1,8 @@
 package ca.site3.site3membershipkiosk;
 
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
@@ -20,6 +22,10 @@ import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.stripe.exception.AuthenticationException;
 
+import ca.site3.site3membershipkiosk.api.MembershipApplication;
+import ca.site3.site3membershipkiosk.api.MembershipApplicationResponse;
+import ca.site3.site3membershipkiosk.api.service.ApiService;
+
 public class SignupActivity extends AppCompatActivity implements OnClickListener {
 
     private static final String LOG_TAG = SignupActivity.class.getSimpleName();
@@ -29,7 +35,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     String[][] techListsArray;
     private NfcAdapter nfcAdapter;
 
-    private MemberDetails memberDetails = new MemberDetails();
+    private MembershipApplication membershipApplication = new MembershipApplication();
 
     EditText fullName;
     EditText email;
@@ -37,6 +43,28 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     EditText paymentCardNumber;
     EditText paymentExpiry;
     EditText paymentCCV;
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            String message = intent.getStringExtra(ApiService.API_RESPONSE_ERROR);
+            MembershipApplicationResponse statusResponse = (MembershipApplicationResponse) intent.getSerializableExtra(ApiService.API_RESPONSE_BODY);
+
+            if (ApiService.API_RESPONSE_CREATE_MEMBERSHIP_APPLICATION_INTENT.equals(action)) {
+                boolean wasSuccessful = intent.getBooleanExtra(ApiService.API_RESPONSE_SUCCESS_STATUS, false);
+
+                if (wasSuccessful) {
+                    handleSuccess(statusResponse);
+                } else {
+                    handleFailure(message);
+                }
+            }
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +92,13 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     public void onPause() {
         super.onPause();
         nfcAdapter.disableForegroundDispatch(this);
+        unregisterReceiver(receiver);
     }
 
     public void onResume() {
         super.onResume();
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
+        registerReceiver(receiver, new IntentFilter(ApiService.API_RESPONSE_CREATE_MEMBERSHIP_APPLICATION_INTENT));
     }
 
     private void submit() {
@@ -78,11 +108,14 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     }
 
     private void submitDetailsToSite3() {
-        memberDetails.fullName = fullName.getText().toString();
-        memberDetails.email = email.getText().toString();
-        memberDetails.rfid = rfid.getText().toString();
+        membershipApplication.name = fullName.getText().toString();
+        membershipApplication.email = email.getText().toString();
+        membershipApplication.rfid = rfid.getText().toString();
 
-        Toast.makeText(SignupActivity.this, "TODO: submit to Site 3", Toast.LENGTH_LONG).show();
+        Intent serviceIntent = new Intent(this, ApiService.class);
+        serviceIntent.putExtra(ApiService.API_REQUEST_TYPE, ApiService.API_CREATE_MEMBERSHIP_APPLICATION_INTENT);
+        serviceIntent.putExtra(ApiService.API_REQUEST_DATA, membershipApplication);
+        startService(serviceIntent);
     }
 
     private static int[] parsePaymentExpiry(String expiryString) {
@@ -126,7 +159,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
 
         String hexTagId = tagIdToHex(tagFromIntent.getId());
         rfid.setText(hexTagId);
-        memberDetails.rfid = rfid.getText().toString();
+        membershipApplication.rfid = rfid.getText().toString();
     }
 
     private String tagIdToHex(byte[] tagId) {
@@ -145,6 +178,14 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
+    public void handleSuccess(MembershipApplicationResponse response) {
+        Toast.makeText(SignupActivity.this, "Success", Toast.LENGTH_SHORT).show();
+    }
+
+    public void handleFailure(String error) {
+        Toast.makeText(SignupActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+    }
+
     TokenCallback stripeCallback = new TokenCallback() {
         @Override
         public void onError(Exception error) {
@@ -158,7 +199,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
         @Override
         public void onSuccess(Token token) {
             // Send token to your server
-            memberDetails.stripeCustomerToken = token.getId();
+            membershipApplication.stripePaymentToken = token.getId();
             submitDetailsToSite3();
         }
     };
