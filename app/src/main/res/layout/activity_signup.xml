@@ -43,7 +43,8 @@
             android:id="@+id/payment_card_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_payment_card_number" />
+            android:hint="@string/hint_payment_card_number"
+            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,16 +55,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/hint_payment_expiry" />
+                android:hint="@string/hint_payment_expiry"
+                android:inputType="number|text" />
             <EditText
                 android:id="@+id/payment_ccv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/hint_payment_ccv" />
+                android:hint="@string/hint_payment_ccv"
+                android:inputType="number" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
