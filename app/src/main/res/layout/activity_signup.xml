@@ -129,4 +129,18 @@
                 android:layout_weight="1" />
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#a0ffffff"
+        android:clickable="true"
+        android:visibility="gone">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge" />
+    </LinearLayout>
 </RelativeLayout>

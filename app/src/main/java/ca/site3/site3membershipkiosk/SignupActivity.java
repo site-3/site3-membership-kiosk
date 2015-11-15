@@ -41,6 +41,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
 
     private MembershipApplication membershipApplication = new MembershipApplication();
 
+    View loading;
     EditText fullName;
     EditText email;
     EditText rfid;
@@ -76,6 +77,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        loading = findViewById(R.id.loading);
         fullName = (EditText) findViewById(R.id.full_name);
         email = (EditText) findViewById(R.id.email);
         rfid = (EditText) findViewById(R.id.rfid);
@@ -108,7 +110,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     }
 
     private void submit() {
-
+        showLoading();
         // if successful will post details to our server
         getTokenForPaymentInformation();
     }
@@ -205,11 +207,22 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     }
 
     public void handleSuccess(MembershipApplicationResponse response) {
-        Toast.makeText(SignupActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SuccessActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void handleFailure(String error) {
         Toast.makeText(SignupActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+        hideLoading();
+    }
+
+    public void showLoading() {
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        loading.setVisibility(View.GONE);
     }
 
     TokenCallback stripeCallback = new TokenCallback() {
@@ -220,6 +233,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
                     error.getLocalizedMessage(),
                     Toast.LENGTH_LONG
             ).show();
+            hideLoading();
         }
 
         @Override
