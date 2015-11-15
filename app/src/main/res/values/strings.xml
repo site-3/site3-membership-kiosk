@@ -8,7 +8,7 @@
     <string name="hint_payment_card_number">Card number</string>
     <string name="hint_payment_expiry">MM / YY</string>
     <string name="hint_payment_ccv">CCV</string>
-    <string name="button_finish_application">Submit</string>
+    <string name="button_finish_application">Apply to Site 3</string>
     <string name="manually_add_rfid">Manually Enter RFID</string>
     <string name="enable_vending_machine">Enable fob for vending machines</string>
     <string name="title_success">Success</string>
