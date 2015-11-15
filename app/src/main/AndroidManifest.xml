@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SuccessActivity"
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
         <service
             android:name=".api.service.ApiService"
             android:label="API Service" >

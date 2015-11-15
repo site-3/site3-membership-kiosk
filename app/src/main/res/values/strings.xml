@@ -11,4 +11,6 @@
     <string name="button_finish_application">Submit</string>
     <string name="manually_add_rfid">Manually Enter RFID</string>
     <string name="enable_vending_machine">Enable fob for vending machines</string>
+    <string name="title_success">Success</string>
+    <string name="text_success">Your membership application was successful! However your application still needs to be approved before you are a member of Site 3.</string>
 </resources>
