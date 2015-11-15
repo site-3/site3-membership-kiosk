@@ -3,4 +3,7 @@
     <color name="primary">#63959c</color>
     <color name="primary_light">#b8c8cb</color>
     <color name="accent">#f7941e</color>
+
+    <color name="button_background_pressed">#8063959c</color>
+    <color name="button_background">#63959c</color>
 </resources>

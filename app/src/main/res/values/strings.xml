@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Site 3 Membership Kiosk</string>
 
+    <string name="title_your_information">Your Information</string>
     <string name="hint_full_name">Full name</string>
     <string name="hint_email">Email</string>
     <string name="title_payment_information">Payment Information</string>
@@ -9,4 +10,5 @@
     <string name="hint_payment_ccv">CCV</string>
     <string name="button_finish_application">Submit</string>
     <string name="manually_add_rfid">Manually Enter RFID</string>
+    <string name="enable_vending_machine">Enable fob for vending machines</string>
 </resources>

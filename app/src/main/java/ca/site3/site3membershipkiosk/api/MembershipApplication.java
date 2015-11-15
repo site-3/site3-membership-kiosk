@@ -11,4 +11,6 @@ public class MembershipApplication implements Serializable {
     public String rfid;
     @SerializedName("stripe_payment_token")
     public String stripePaymentToken;
+    @SerializedName("enable_vending_machine")
+    public Boolean enableVendingMachine;
 }

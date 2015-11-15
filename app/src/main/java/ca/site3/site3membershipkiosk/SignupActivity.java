@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
     EditText paymentCardNumber;
     EditText paymentExpiry;
     EditText paymentCCV;
+    CheckBox enableVendingMachine;
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -77,6 +79,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
         fullName = (EditText) findViewById(R.id.full_name);
         email = (EditText) findViewById(R.id.email);
         rfid = (EditText) findViewById(R.id.rfid);
+        enableVendingMachine = (CheckBox) findViewById(R.id.enable_vending_machine);
 
         paymentCardNumber = (EditText) findViewById(R.id.payment_card_number);
         paymentExpiry = (EditText) findViewById(R.id.payment_expiry);
@@ -114,6 +117,7 @@ public class SignupActivity extends AppCompatActivity implements OnClickListener
         membershipApplication.name = fullName.getText().toString();
         membershipApplication.email = email.getText().toString();
         membershipApplication.rfid = rfid.getText().toString();
+        membershipApplication.enableVendingMachine = enableVendingMachine.isChecked();
 
         Intent serviceIntent = new Intent(this, ApiService.class);
         serviceIntent.putExtra(ApiService.API_REQUEST_TYPE, ApiService.API_CREATE_MEMBERSHIP_APPLICATION_INTENT);
